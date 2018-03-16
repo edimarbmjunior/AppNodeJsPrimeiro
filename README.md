@@ -27,4 +27,4 @@ Após baixar o projeto deve ser executado alguns comandos.
 
 ## Autor
 
-* **Edimar B Miranda Junior** - *Repositório Git* - [PurpleBooth](https://github.com/edimarbmjunior)
+* **Edimar B Miranda Junior** - *[Repositório Git](https://github.com/edimarbmjunior)*
