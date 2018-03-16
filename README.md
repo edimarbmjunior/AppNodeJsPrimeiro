@@ -17,13 +17,14 @@ Após baixar o projeto deve ser executado alguns comandos.
  npm install http express debug --save
  npm install
  npm install nodemon --save-dev
+ npm install body-parser --save
  ```
 
  Após a instalação do nodemon, executar o servidor utlizando nodemon, pois quando executado depois de cada alteração de arquivo do projeto e servidor e reiniciado automaticamente.
  ```
- nodemon .\bin\server.js
+ nodemon ./bin/server.js
  ```
 
 ## Autor
 
-* **Edimar B Miranda Junior** - *Initial work* - [PurpleBooth](https://github.com/edimarbmjunior)
+* **Edimar B Miranda Junior** - *Repositório Git* - [PurpleBooth](https://github.com/edimarbmjunior)
