@@ -23,3 +23,7 @@ Após baixar o projeto deve ser executado alguns comandos.
  ```
  nodemon .\bin\server.js
  ```
+
+## Autor
+
+* **Edimar B Miranda Junior** - *Initial work* - [PurpleBooth](https://github.com/edimarbmjunior)
