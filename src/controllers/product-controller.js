@@ -2,9 +2,21 @@
 
 const mongoose = require('mongoose');
 const Product = mongoose.model('Product');
+const validationContract = require('../validators/fluent-validator');
+const repository = require('../repositories/product-repositories');
 
 exports.get = (req, res, next) => {
-    Product.find({
+    repository
+        .get()
+        .then(data => {
+            res.status(201).send(data);
+        })
+        .catch(e => {
+            res.status(400).send(e);
+        });
+    // ou
+
+    /* Product.find({
         active:true // ativa o filtro
     },'title price slug') // campos que deverar retornar
         .then(data => {
@@ -12,11 +24,23 @@ exports.get = (req, res, next) => {
         })
         .catch(e => {
             res.status(400).send(e);
-        });
+        }); */
 };
 
 exports.getBySlug = (req, res, next) => {
-    Product.findOne({
+
+    repository
+        .getBySlug(req.params.slug)
+        .then(data => {
+            res.status(201).send(data);
+        })
+        .catch(e => {
+            res.status(400).send(e);
+        });
+
+    // OU
+
+    /* Product.findOne({
         slug: req.params.slug,
         active:true // ativa o filtro
     },'title description price slug tag') // campos que deverar retornar
@@ -25,11 +49,22 @@ exports.getBySlug = (req, res, next) => {
         })
         .catch(e => {
             res.status(400).send(e);
-        });
+        }); */
 };
 
 exports.getById = (req, res, next) => {
-    Product.findById(
+
+    repository
+        .getById(req.params.id)
+        .then(data => {
+            res.status(201).send(data);
+        })
+        .catch(e => {
+            res.status(400).send(e);
+        });
+    
+    //OU
+    /* Product.findById(
             req.params.id,
             'title description price slug tag' // campos que deverar retornar
         )
@@ -38,11 +73,22 @@ exports.getById = (req, res, next) => {
         })
         .catch(e => {
             res.status(400).send(e);
-        });
+        }); */
 };
 
 exports.getByTag = (req, res, next) => {
-    Product.find({
+    
+    repository
+        .getByTag(req.params.tag)
+        .then(data => {
+            res.status(201).send(data);
+        })
+        .catch(e => {
+            res.status(400).send(e);
+        });
+    
+    //OU
+    /* Product.find({
         tag:req.params.tag,
         active:true
     }, 'title description price slug tag' // campos que deverar retornar
@@ -52,10 +98,35 @@ exports.getByTag = (req, res, next) => {
         })
         .catch(e => {
             res.status(400).send(e);
-        });
+        }); */
 };
 
 exports.post = (req, res, next) => {
+    let contract = new validationContract();
+    contract.hasMinLen(req.body.title, 3, 'O título deve conter pelo menos 3 caracteres.');
+    contract.hasMinLen(req.body.slug, 3, 'O slug deve conter pelo menos 3 caracteres.');
+    contract.hasMinLen(req.body.description, 3, 'O description deve conter pelo menos 3 caracteres.');
+
+    // Se os dados forem inválidos
+    if(!contract.isValid()){
+        res.status(400).send(contract.errors()).end();
+        return;
+    }
+
+    repository
+        .create(req.body)
+        .then(x => {
+            res.status(201).send({
+                message: 'Produto cadastrado com sucesso'
+            });
+        })
+        .catch(e => {
+            res.status(400).send({
+                message: 'Falha ao cadastrar o produto', data: e
+            });
+        });
+
+    /* // OU
     //var product = new Product(req.body); -> perigoso
     var product = new Product();
     product.title = req.body.title;
@@ -75,10 +146,26 @@ exports.post = (req, res, next) => {
             res.status(400).send({
                 message: 'Falha ao cadastrar o produto', data: e
             });
-        });
+        }); */
 };
 
 exports.put = (req, res, next) => {
+    
+    repository
+        .update(req.params.id, req.body)
+        .then(x => {
+            res.status(200).send({
+                message: 'Produto atualizado com sucesso!'
+            })
+        }).catch(e => {
+            res.status(400).send({
+                message:'Falha ao atualizar o produto',
+                data: e
+            })
+        });
+
+    // OU
+    /*
     Product.findByIdAndUpdate(req.params.id, {
         $set:{
             title:req.body.title,
@@ -95,11 +182,26 @@ exports.put = (req, res, next) => {
             message:'Falha ao atualizar o produto',
             data: e
         })
-    });
+    }); */
 };
 
 exports.delete = (req, res, next) => {
-    Product.findOneAndRemove(req.body.id)
+    
+    repository
+        .delete(req.body.id)
+        .then(x => {
+            res.status(200).send({
+                message: 'Produto removido com sucesso!'
+            })
+        }).catch(e => {
+            res.status(400).send({
+                message:'Falha ao remover o produto',
+                data: e
+            })
+        });
+
+    // OU
+    /* Product.findOneAndRemove(req.body.id)
     .then(x => {
         res.status(200).send({
             message: 'Produto removido com sucesso!'
@@ -109,6 +211,5 @@ exports.delete = (req, res, next) => {
             message:'Falha ao remover o produto',
             data: e
         })
-    });
-    res.status(200).send(req.body);
+    }); */
 };
