@@ -5,7 +5,20 @@ const Product = mongoose.model('Product');
 const validationContract = require('../validators/fluent-validator');
 const repository = require('../repositories/product-repositories');
 
-exports.get = (req, res, next) => {
+exports.get = async(req, res, next) => {
+    try {
+        var data = await repository.get();
+        res.status(200).send(data);
+    } catch (error) {
+        res.status(500).send({
+            message: 'Falha ao processar sua requisição',
+            data: error
+        });
+    }
+};
+//OU
+// Utilizado quando utilizado somente promise
+/* exports.get = (req, res, next) => {
     repository
         .get()
         .then(data => {
@@ -24,10 +37,22 @@ exports.get = (req, res, next) => {
         })
         .catch(e => {
             res.status(400).send(e);
-        }); */
-};
+        }); //
+}; */
 
-exports.getBySlug = (req, res, next) => {
+exports.getBySlug = async(req, res, next) => {
+
+    try {
+        var data = await repository.getBySlug(req.params.slug);
+        res.status(201).send(data);
+    } catch (error) {
+        res.status(500).send({
+            message: 'Falha ao processar sua requisição',
+            data: error
+        });
+    }
+};
+/* exports.getBySlug = (req, res, next) => {
 
     repository
         .getBySlug(req.params.slug)
@@ -49,10 +74,21 @@ exports.getBySlug = (req, res, next) => {
         })
         .catch(e => {
             res.status(400).send(e);
-        }); */
-};
+        }); //
+}; */
 
-exports.getById = (req, res, next) => {
+exports.getById = async(req, res, next) => {
+    try {
+        var data = await repository.getById(req.params.id);
+        res.status(201).send(data);
+    } catch (error) {
+        res.status(500).send({
+            message: 'Falha ao processar sua requisição',
+            data: error
+        });
+    }
+};
+/* exports.getById = (req, res, next) => {
 
     repository
         .getById(req.params.id)
@@ -73,10 +109,21 @@ exports.getById = (req, res, next) => {
         })
         .catch(e => {
             res.status(400).send(e);
-        }); */
-};
+        }); //
+}; */
 
-exports.getByTag = (req, res, next) => {
+exports.getByTag = async(req, res, next) => {
+    try {
+        var data = await repository.getByTag(req.params.tag);
+        res.status(201).send(data);
+    } catch (error) {
+        res.status(500).send({
+            message: 'Falha ao processar sua requisição',
+            data: error
+        });
+    }
+};
+/* exports.getByTag = (req, res, next) => {
     
     repository
         .getByTag(req.params.tag)
@@ -98,10 +145,34 @@ exports.getByTag = (req, res, next) => {
         })
         .catch(e => {
             res.status(400).send(e);
-        }); */
-};
+        }); //
+}; */
 
-exports.post = (req, res, next) => {
+exports.post = async(req, res, next) => {
+    let contract = new validationContract();
+    contract.hasMinLen(req.body.title, 3, 'O título deve conter pelo menos 3 caracteres.');
+    contract.hasMinLen(req.body.slug, 3, 'O slug deve conter pelo menos 3 caracteres.');
+    contract.hasMinLen(req.body.description, 3, 'O description deve conter pelo menos 3 caracteres.');
+
+    // Se os dados forem inválidos
+    if(!contract.isValid()){
+        res.status(400).send(contract.errors()).end();
+        return;
+    }
+
+    try {
+        await repository.create(req.body);
+        res.status(201).send({
+            message: 'Produto cadastro com sucesso!'
+        });
+    } catch (error) {
+        res.status(500).send({
+            message: 'Falha ao processar sua requisição',
+            data: error
+        });
+    }
+};
+/* exports.post = (req, res, next) => {
     let contract = new validationContract();
     contract.hasMinLen(req.body.title, 3, 'O título deve conter pelo menos 3 caracteres.');
     contract.hasMinLen(req.body.slug, 3, 'O slug deve conter pelo menos 3 caracteres.');
@@ -146,10 +217,24 @@ exports.post = (req, res, next) => {
             res.status(400).send({
                 message: 'Falha ao cadastrar o produto', data: e
             });
-        }); */
-};
+        }); //
+}; */
 
-exports.put = (req, res, next) => {
+exports.put = async(req, res, next) => {
+    
+    try {
+        await repository.update(req.params.id, req.body);
+        res.status(200).send({
+            message: 'Produto alterado com sucesso!'
+        });
+    } catch (error) {
+        res.status(500).send({
+            message: 'Falha ao processar sua requisição',
+            data: error
+        });
+    }
+};
+/* exports.put = (req, res, next) => {
     
     repository
         .update(req.params.id, req.body)
@@ -182,10 +267,23 @@ exports.put = (req, res, next) => {
             message:'Falha ao atualizar o produto',
             data: e
         })
-    }); */
-};
+    }); /
+}; */
 
-exports.delete = (req, res, next) => {
+exports.delete = async(req, res, next) => {
+    try {
+        await repository.delete(req.body.id);
+        res.status(200).send({
+            message: 'Produto removido com sucesso!'
+        });
+    } catch (error) {
+        res.status(500).send({
+            message: 'Falha ao processar sua requisição',
+            data: error
+        });
+    }
+};
+/* exports.delete = (req, res, next) => {
     
     repository
         .delete(req.body.id)
@@ -211,5 +309,5 @@ exports.delete = (req, res, next) => {
             message:'Falha ao remover o produto',
             data: e
         })
-    }); */
-};
+    }); /
+}; */
