@@ -33,15 +33,22 @@ db.on('error', console.error.bind(console, 'connection error:'));
 
 // carrega os modelos
 const Product = require('./models/product');
+const Customer = require('./models/customer');
+const Order = require('./models/order');
 
 //Carrega as Rotas
 const indexRoute = require('./routes/index');
 const productRoute = require('./routes/product');
+const customerRoute = require('./routes/customer-routes');
 
 app.use(bodyParser.json());
-app.use(bodyParser.urlencoded({ extended: false }));
+app.use(bodyParser.urlencoded({
+    extended: false
+  })
+);
 
 app.use('/', indexRoute);
 app.use('/products', productRoute);
+app.use('/customers', customerRoute);
 
 module.exports = app;
