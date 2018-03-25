@@ -4,13 +4,12 @@ const express = require('express');
 const bodyParser = require('body-parser');
 //body-parser converter a resposta (response) para JSON
 const mongoose = require('mongoose');
+const uri = require('./mongoose-dados-uri/uri');
 
 const app = express();
 const router = express.Router();
 
-//conecta ao banco de dados
-//mongoose.connection('mongodb://nodejsedimar:nodejsedimar@ds117739.mlab.com:17739/nodejsteste');
-let uri = 'mongodb://nodejsedimar:nodejsedimar@ds117739.mlab.com:17739/nodejsteste';
+let URI = uri.recuperaUri();
 
 var options = {
     "server" : {
@@ -27,7 +26,7 @@ var options = {
     }
   }
 
-mongoose.connect(uri, options);
+mongoose.connect(URI, options);
 var db = mongoose.connection;
 db.on('error', console.error.bind(console, 'connection error:'));
 
