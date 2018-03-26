@@ -30,11 +30,6 @@ const schema = new Schema({
             required:true,
             default: 1
         },
-        price:{
-            type: Number,
-            required:true,
-            default: 1
-        },
         Product:{
             type: mongoose.Schema.Types.ObjectId,
             ref: 'Product'

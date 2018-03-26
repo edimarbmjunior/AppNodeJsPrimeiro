@@ -5,6 +5,7 @@ const bodyParser = require('body-parser');
 //body-parser converter a resposta (response) para JSON
 const mongoose = require('mongoose');
 const uri = require('./mongoose-dados-uri/uri');
+const config = require('./config');
 
 const app = express();
 const router = express.Router();
@@ -26,7 +27,9 @@ var options = {
     }
   }
 
-mongoose.connect(URI, options);
+//mongoose.connect(URI, options);
+//mongoose.connect(URI);
+mongoose.connect(config.connectionString);
 var db = mongoose.connection;
 db.on('error', console.error.bind(console, 'connection error:'));
 
@@ -39,6 +42,7 @@ const Order = require('./models/order');
 const indexRoute = require('./routes/index');
 const productRoute = require('./routes/product');
 const customerRoute = require('./routes/customer-routes');
+const orderRoute = require('./routes/order-routes');
 
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({
@@ -49,5 +53,6 @@ app.use(bodyParser.urlencoded({
 app.use('/', indexRoute);
 app.use('/products', productRoute);
 app.use('/customers', customerRoute);
+app.use('/order', orderRoute);
 
 module.exports = app;

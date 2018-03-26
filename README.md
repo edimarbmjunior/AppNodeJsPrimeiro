@@ -9,22 +9,38 @@
 
 Instalar node e npm.
 
-### Instalação
+## Instalação
 
 Após baixar o projeto deve ser executado alguns comandos.
 
  ```
  npm install
- npm install http express debug --save
- npm install nodemon --save-dev
- npm install body-parser --save
- npm install mongoose --save
  ```
+
+## Execução
+
+Para executar basta utilizar o comando:
+
+ ```
+ node ./bin/server.js
+ ```
+
+### OU
 
  Após a instalação do nodemon, executar o servidor utlizando nodemon, pois quando executado depois de cada alteração de arquivo do projeto e servidor e reiniciado automaticamente.
  ```
  nodemon ./bin/server.js
  ```
+
+## Dependencias
+
+* body-parser - *dependencies*
+* debug - *dependencies*
+* express - *dependencies*
+* guid - *dependencies*
+* http - *dependencies*
+* mongoose - *dependencies*
+* nodemon - *devDependencies*
 
 ## Autor
 
