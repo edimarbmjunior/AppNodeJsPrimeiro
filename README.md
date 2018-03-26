@@ -40,6 +40,7 @@ Para executar basta utilizar o comando:
 * guid - *dependencies*
 * http - *dependencies*
 * mongoose - *dependencies*
+* md5 - *dependencies*
 * nodemon - *devDependencies*
 
 ## Autor
