@@ -27,7 +27,7 @@ Para executar basta utilizar o comando:
 
 ### OU
 
- Após a instalação do nodemon, executar o servidor utlizando nodemon, pois quando executado depois de cada alteração de arquivo do projeto e servidor e reiniciado automaticamente.
+ Após a instalação do nodemon, executar o servidor utlizando nodemon, pois quando executado depois de cada alteração de arquivo do projeto e servidor é reiniciado automaticamente.
  ```
  nodemon ./bin/server.js
  ```
@@ -41,6 +41,8 @@ Para executar basta utilizar o comando:
 * http - *dependencies*
 * mongoose - *dependencies*
 * md5 - *dependencies*
+* azure-storage - *dependencies*
+* jsonwebtoken - *dependencies*
 * nodemon - *devDependencies*
 
 ## Autor

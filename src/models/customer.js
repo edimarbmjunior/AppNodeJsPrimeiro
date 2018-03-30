@@ -9,7 +9,7 @@ const schema = new Schema({
         type:String,
         required:true
     },
-    email:{//identificador do produto
+    email:{//identificador do Cliente
         type:String,
         required:true
     },

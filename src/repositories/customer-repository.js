@@ -9,7 +9,22 @@ exports.get = async() => {
     return res;
 };
 
+exports.authenticate = async() => {
+    const res = await Customer.findOne({
+        email: data.email,
+        password: data.password
+    });
+    return res;
+};
+
 exports.create = async(data) => {
     var customer = new Customer(data);
     await customer.save();
 }
+
+exports.getByEmail = async(email) => {
+    const res = await Customer.findOne({
+        email: email
+    });
+    return res;
+};
