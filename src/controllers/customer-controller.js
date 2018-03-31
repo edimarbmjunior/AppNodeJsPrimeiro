@@ -44,7 +44,8 @@ exports.post = async(req, res, next) => {
         await repository.create({
             name: req.body.name,
             email: req.body.email,
-            password: md5(req.body.password + global.SALT_KEY)
+            password: md5(req.body.password + global.SALT_KEY),
+            roles: "user"
         });
 
         emailService.send(req.body.email, 'Bem vindo novo usuário ao introdução nodeJS!', global.EMAIL_TMPL.replace('{0}', req.body.name));
@@ -74,15 +75,60 @@ exports.autenticar = async(req, res, next) => {
         }
 
         const token = await autorService.generateToken({
+            id: customer._id,
             email: customer.email,
-            name: customer.name
+            name: customer.name,
+            roles: customer.roles
         })
 
         res.status(201).send({
             message: 'Cliente cadastro com sucesso!',
+            token: token,
             data: {
+                id: customer._id,
                 email: customer.email,
-                name: customer.name
+                name: customer.name,
+                roles: customer.roles
+            }
+        });
+    } catch (error) {
+        res.status(500).send({
+            message: 'Falha ao processar sua requisição',
+            data: error
+        });
+    }
+};
+
+exports.atualizarToken = async(req, res, next) => {
+    try {
+        //Recupera Token
+        const token = req.body.token || req.query.token || req.headers['x-access-token'];
+        //decodifica o token
+        const data = await autorService.decodeToken(token);
+
+        const customer = await repository.getById(data.id);
+
+        if(!customer){
+            return res.status(401).send({
+                message: 'Usuário não encontrado!'
+            });
+        }
+
+        const tokenData = await autorService.generateToken({
+            id: customer._id,
+            email: customer.email,
+            name: customer.name,
+            roles: customer.roles
+        })
+
+        res.status(201).send({
+            message: 'Cliente cadastro com sucesso!',
+            token: tokenData,
+            data: {
+                id: customer._id,
+                email: customer.email,
+                name: customer.name,
+                roles: customer.roles
             }
         });
     } catch (error) {

@@ -9,7 +9,7 @@ exports.get = async() => {
     return res;
 };
 
-exports.authenticate = async() => {
+exports.authenticate = async(data) => {
     const res = await Customer.findOne({
         email: data.email,
         password: data.password
@@ -26,5 +26,10 @@ exports.getByEmail = async(email) => {
     const res = await Customer.findOne({
         email: email
     });
+    return res;
+};
+
+exports.getById = async(id) => {
+    const res = await Customer.findById(id);
     return res;
 };
