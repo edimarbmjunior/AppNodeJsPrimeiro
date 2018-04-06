@@ -1,9 +1,9 @@
 'use strict';
 
-const express = require('express');
-const router = express.Router();
-const controller = require('../controllers/customer-controller');
-const autorizacaoService = require('../services/auth-service');
+var express = require('express');
+var router = express.Router();
+var controller = require('../controllers/customer-controller');
+var autorizacaoService = require('../services/auth-service');
 
 router.get('/', autorizacaoService.authorize, controller.get);
 router.post('/', controller.post);

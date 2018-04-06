@@ -1,16 +1,16 @@
 'use strict';
 
-const express = require('express');
-const bodyParser = require('body-parser');
+var express = require('express');
+var bodyParser = require('body-parser');
 //body-parser converter a resposta (response) para JSON
-const mongoose = require('mongoose');
-const uri = require('./mongoose-dados-uri/uri');
-const config = require('./config');
+var mongoose = require('mongoose');
+var uri = require('./mongoose-dados-uri/uri');
+var config = require('./config');
 
-const app = express();
-const router = express.Router();
+var app = express();
+var router = express.Router();
 
-let URI = uri.recuperaUri();
+var URI = uri.recuperaUri();
 
 var options = {
     "server" : {
@@ -34,15 +34,15 @@ var db = mongoose.connection;
 db.on('error', console.error.bind(console, 'connection error:'));
 
 // carrega os modelos
-const Product = require('./models/product');
-const Customer = require('./models/customer');
-const Order = require('./models/order');
+var Product = require('./models/product');
+var Customer = require('./models/customer');
+var Order = require('./models/order');
 
 //Carrega as Rotas
-const indexRoute = require('./routes/index');
-const productRoute = require('./routes/product');
-const customerRoute = require('./routes/customer-routes');
-const orderRoute = require('./routes/order-routes');
+var indexRoute = require('./routes/index');
+var productRoute = require('./routes/product');
+var customerRoute = require('./routes/customer-routes');
+var orderRoute = require('./routes/order-routes');
 
 //app.use(bodyParser.json());// Usar dessa forma existe um limite já pré-estabelecido
 app.use(bodyParser.json({

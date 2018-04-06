@@ -1,9 +1,9 @@
 'use strict';
 
-const express = require('express');
-const router = express.Router();
-const controller = require('../controllers/product-controller');
-const autorizacaoService = require('../services/auth-service');
+var express = require('express');
+var router = express.Router();
+var controller = require('../controllers/product-controller');
+var autorizacaoService = require('../services/auth-service');
 
 router.get('/', controller.get);
 router.get('/:slug', controller.getBySlug);
