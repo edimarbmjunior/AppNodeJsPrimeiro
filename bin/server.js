@@ -1,6 +1,6 @@
 'use strict';
 
-const app = require('../src/app');
+let app = require('../src/app');
 const debug = require('debug')('AppNodeJsPrimeiro:server');
 const http = require('http');
 
