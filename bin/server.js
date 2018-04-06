@@ -1,7 +1,5 @@
-'use strict';
-
-let app = require('../src/app');
-const debug = require('debug')('AppNodeJsPrimeiro:server');
+var app = require('../src/app');
+var debug = require('debug')('AppNodeJsPrimeiro:server');
 const http = require('http');
 
 const port = normalizePort(process.env.PORT || '3000');
