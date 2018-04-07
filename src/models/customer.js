@@ -1,9 +1,9 @@
 'use strict';
 
-var mongoose = require('mongoose');
-var Schema = mongoose.Schema;
+const mongoose = require('mongoose');
+const Schema = mongoose.Schema;
 
-var schema = new Schema({
+const schema = new Schema({
     // o "_id" é gerado automaticamente pelo o mongodb de forma a controlar
     name:{
         type:String,
